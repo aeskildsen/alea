@@ -14,5 +14,5 @@ So far, the following Patterns are included:
 
 ## Installation
 
-With Git and SuperCollider installed, run the following line of code in SuperCollider:
+With [Git](https://git-scm.com/) and [SuperCollider](https://supercollider.github.io/) installed, run the following line of code in SuperCollider:
 `Quarks.install("https://github.com/aeskildsen/alea")`
