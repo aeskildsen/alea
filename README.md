@@ -10,6 +10,7 @@ So far, the following Patterns are included:
 
 - Pshunc - shuffle and truncate a list of items
 - Pmarkov - a first order Markov chain
+- Pxsum - create sequences of values that sum to a target value
 
 ## Installation
 
