@@ -1,0 +1,96 @@
+TITLE:: Pxsum
+SUMMARY:: Generate values that sum to a target
+CATEGORIES:: Libraries>alea, Streams-Patterns-Events>Patterns>List
+RELATED:: Overviews/alea, Classes/Pshunc, Classes/Pshuf
+
+DESCRIPTION::
+Pxsum generates a stream of values randomly selected from a list that sum to a target value. Values are chosen from the list repeatedly until the target sum is reached. If no value from the list can be added without exceeding the target value, the remainder becomes the final value. This is useful for generating rhythm patterns that fit within a specific duration, or melodic sequences that span a particular interval.
+
+The underlying method uses link::Classes/Array#xsum#Array:xsum::.
+
+CLASSMETHODS::
+
+METHOD:: new
+Create a new Pxsum.
+
+ARGUMENT:: list
+A link::Classes/List:: or link::Classes/Array:: of numeric values.
+
+ARGUMENT:: sum
+Target sum for the generated sequence. Default is 1.
+
+ARGUMENT:: repeats
+Number of times the generated sequence will be repeated. Default is 1.
+
+returns:: A Pxsum
+
+EXAMPLES::
+
+Run the examples below multiple times to see the random selection in effect.
+
+Generate values that sum to 1.
+code::
+(
+var list = [0.1, 0.2, 0.3, 0.4];
+Pxsum(list, 1).asStream.all.postln;
+)
+::
+
+Generate values that sum to 10.
+code::
+(
+var list = [1, 2, 3, 4];
+Pxsum(list, 10).asStream.all.postln;
+)
+::
+
+Now with repetition.
+code::
+(
+var list = [1, 2, 3, 4];
+Pxsum(list, 5, 3).asStream.all.postln;
+)
+::
+
+STRONG::Musical examples::
+
+Generate rhythm patterns that fit exactly within a measure (4 beats).
+code::
+(
+Pbind(
+	\dur, Pxsum([0.1, 0.15, 0.2], 1, inf).trace,
+).play;
+)
+::
+
+Create melodic contours that span a specific interval range.
+code::
+(
+Pbind(
+	\degree, Pxsum([-2, -1, 1, 2, 3], 7, inf).round.trace,
+	\dur, 0.2,
+).play;
+)
+::
+
+Use Pxsum to generate durations that always complete a phrase in the same time.
+code::
+(
+Pbind(
+	\dur, Pxsum([0.5, 1, 1.5, 2], 4, inf),
+	\degree, Pwhite(0, 7),
+	\amp, 0.3,
+).play;
+)
+::
+
+Combine with other patterns for complex rhythmic structures.
+code::
+(
+Pbind(
+	\dur, Pxsum([1, 2, 3, 4, 5], Pwhite(4.0, 8.0), inf),
+	\degree, Pxrand([0, 2, 4, 5, 7], inf),
+	\amp, 0.3,
+).play;
+)
+::
