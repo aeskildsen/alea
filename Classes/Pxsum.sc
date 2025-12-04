@@ -1,13 +1,14 @@
 Pxsum : ListPattern {
-	var <>sum;
-	*new { arg list, sum=1, repeats=1;
+	var <>sum, <>minval;
+	*new { arg list, sum=1, repeats=1, minval=0.001;
 		^super.new(list, repeats)
-		.sum_(sum);
+		.sum_(sum)
+		.minval_(minval);
 	}
 
 	embedInStream { arg inval;
 		var item;
-		var localList = list.copy.xsum(sum);
+		var localList = list.copy.xsum(sum, minval);
 
 		repeats.value(inval).do({
 			localList.size.do({ |i|
